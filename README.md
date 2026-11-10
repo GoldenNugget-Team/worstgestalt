@@ -52,8 +52,7 @@ and side-load it:
 | Tool | Verdict |
 |---|---|
 | **AltStore / SideStore** | ✅ recommended — they register/fit the App Group to your team automatically |
-| **GoldenNugget-mobile** | ✅ recommended — same |
-| [worstload](https://github.com/GoldenNugget-Team) | ✅ mini-CLI sideloader (private — ask in the Discord) — registers the requested App Group verbatim; use this with a paid Apple ID if your usual tool can't register groups |
+| [worstload](https://github.com/GoldenNugget-Team) | ✅ mini-CLI sideloader (private — ask in the Discord) — signs **and** installs the IPA straight from the command line; registers the requested App Group verbatim; works with a paid Apple ID if your usual tool can't register groups |
 | Feather | ❌ — does not register App Groups on the portal → the class-7 escape won't work |
 | Other paid-cert installers | ❌ — a paid certificate **without a registered App Group** is not enough; use worstload |
 
@@ -107,7 +106,7 @@ the full walkthrough is in
 **The icon in the list says the escape test failed / wrong backend?**
 The app tells you which backend is available when it loads. Backend A needs
 the App Group registered properly — reinstall with AltStore / SideStore /
-GoldenNugget-mobile / worstload, or use Backend B on iOS 26.x.
+AltStore / SideStore / worstload, or use Backend B on iOS 26.x.
 
 **Something broke after restoring a value.**
 Open the app → Backups → restore the most recent backup (or import an
