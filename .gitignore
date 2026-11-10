@@ -1,0 +1,5 @@
+.build/
+xtool/
+*.ipa
+.DS_Store
+*:Zone.Identifier

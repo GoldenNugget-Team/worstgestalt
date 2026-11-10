@@ -1,0 +1,16 @@
+version: 1
+bundleID: com.awesomenull.worstgestalt
+product: worsegestalt
+infoPath: Info.plist
+entitlementsPath: entitlements.plist
+# Icon plumbing:
+#  - Assets.car: compiled by our own pure-Python CoreUI compiler (sibling
+#    project ../coreui-car) — facet 'AppIcon' with a MultisizeImage holder
+#    (Part 218) plus the light and dark 1024x1024 renditions (Part 220).
+#    Regenerate via: python3 tools/car/make_icon_car.py — see docs/appicon.md
+#  - AppIcon.png (iconPath): legacy flat fallback that survives even if the
+#    hand-rolled catalog is rejected; the system applies its Liquid Glass
+#    bezel to legacy icons on iOS 26+. AppIcon.icon/ stays as the glass-layer
+#    source for a future Xcode/macOS build.
+resources:
+  - Assets.car

@@ -1,0 +1,197 @@
+{
+  "color-space-for-untagged-svg-colors" : "display-p3",
+  "fill" : {
+    "linear-gradient" : [
+      "display-p3:0.48000,0.33000,1.00000,1.00000",
+      "display-p3:0.22000,0.06000,0.72000,1.00000"
+    ]
+  },
+  "fill-specializations" : [
+    {
+      "value" : {
+        "linear-gradient" : [
+          "display-p3:0.48000,0.33000,1.00000,1.00000",
+          "display-p3:0.22000,0.06000,0.72000,1.00000"
+        ]
+      }
+    },
+    {
+      "appearance" : "dark",
+      "value" : "system-dark"
+    },
+    {
+      "appearance" : "tinted",
+      "value" : "automatic"
+    }
+  ],
+  "groups" : [
+    {
+      "name" : "Glyph",
+      "blur-material" : 0.1,
+      "blur-material-specializations" : [
+        {
+          "value" : 0.1
+        },
+        {
+          "appearance" : "dark",
+          "value" : 0.05
+        },
+        {
+          "appearance" : "tinted",
+          "value" : 0.15
+        }
+      ],
+      "lighting" : "individual",
+      "specular" : true,
+      "specular-specializations" : [
+        {
+          "value" : true
+        },
+        {
+          "appearance" : "tinted",
+          "value" : false
+        }
+      ],
+      "shadow" : {
+        "kind" : "layer-color",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      },
+      "shadow-specializations" : [
+        {
+          "value" : {
+            "kind" : "layer-color",
+            "opacity" : 0.5
+          }
+        },
+        {
+          "appearance" : "dark",
+          "value" : {
+            "kind" : "neutral",
+            "opacity" : 0.5
+          }
+        }
+      ],
+      "translucency-specializations" : [
+        {
+          "value" : {
+            "enabled" : true,
+            "value" : 0.5
+          }
+        },
+        {
+          "appearance" : "dark",
+          "value" : {
+            "enabled" : true,
+            "value" : 0.4
+          }
+        },
+        {
+          "appearance" : "tinted",
+          "value" : {
+            "enabled" : false,
+            "value" : 0
+          }
+        }
+      ],
+      "layers" : [
+        {
+          "name" : "Pencil",
+          "image-name" : "Pencil.svg",
+          "glass" : true,
+          "opacity" : 1,
+          "fill" : {
+            "automatic-gradient" : "extended-gray:1.00000,1.00000"
+          },
+          "fill-specializations" : [
+            {
+              "value" : {
+                "automatic-gradient" : "extended-gray:1.00000,1.00000"
+              }
+            },
+            {
+              "appearance" : "dark",
+              "value" : {
+                "automatic-gradient" : "extended-gray:1.00000,1.00000"
+              }
+            },
+            {
+              "appearance" : "tinted",
+              "value" : {
+                "solid" : "extended-gray:1.00000,1.00000"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name" : "Grid",
+      "blur-material" : 0.05,
+      "lighting" : "combined",
+      "specular" : true,
+      "shadow" : {
+        "kind" : "none",
+        "opacity" : 0
+      },
+      "shadow-specializations" : [
+        {
+          "value" : {
+            "kind" : "none",
+            "opacity" : 0
+          }
+        },
+        {
+          "appearance" : "dark",
+          "value" : {
+            "kind" : "neutral",
+            "opacity" : 0.15
+          }
+        }
+      ],
+      "translucency" : {
+        "enabled" : false,
+        "value" : 0
+      },
+      "layers" : [
+        {
+          "name" : "Lattice",
+          "image-name" : "Grid.svg",
+          "glass" : true,
+          "opacity" : 0.14,
+          "opacity-specializations" : [
+            {
+              "value" : 0.14
+            },
+            {
+              "appearance" : "dark",
+              "value" : 0.09
+            },
+            {
+              "appearance" : "tinted",
+              "value" : 0.35
+            }
+          ],
+          "blend-mode-specializations" : [
+            {
+              "value" : "normal"
+            },
+            {
+              "appearance" : "dark",
+              "value" : "overlay"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : "shared",
+    "circles" : [
+      "watchOS"
+    ]
+  }
+}

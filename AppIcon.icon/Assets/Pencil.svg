@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  WorstGestalt glyph: a pencil, drawn diagonally (eraser top-right, tip
+  bottom-left), Xcode-style. Canvas is the 1024x1024 Icon Composer canvas.
+  Colors untagged so icon.json's "color-space-for-untagged-svg-colors"
+  picks display-p3. Coordinates were baked from the 45-degree diagonal
+  axis (s along the pencil, v across) by tools/gen_preview math.
+-->
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- body (rounded corners chamfered), ring gap before the eraser -->
+  <path fill="#FFFFFF" d="M374.8 603.9 L374.8 587.0 L603.9 357.9 L620.9 357.9 L666.1 403.1 L666.1 420.1 L437.0 649.2 L420.1 649.2 Z" />
+  <!-- cone tip (12px seam gap between body and cone) -->
+  <path fill="#FFFFFF" d="M374.8 587.0 L315.4 708.6 L437.0 649.2 Z" />
+  <!-- eraser (rounded cap, 10px seam gap to the body) -->
+  <path fill="#FFFFFF" d="M619.5 342.3 L681.7 404.5 L714.2 372.0 L721.3 345.1 L715.6 325.3 L698.7 308.4 L678.9 302.7 L652.0 309.8 Z" />
+</svg>

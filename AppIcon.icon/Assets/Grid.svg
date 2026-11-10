@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  WorstGestalt background grid, Xcode-logo style: a full-bleed 8px lattice
+  every 128px on the 1024 canvas. Drawn behind the glyph; the plate
+  gradient shows through, layer opacity in icon.json keeps it subtle.
+-->
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="124" y="0" width="8" height="1024" fill="#FFFFFF" />
+  <rect x="0" y="124" width="1024" height="8" fill="#FFFFFF" />
+  <rect x="252" y="0" width="8" height="1024" fill="#FFFFFF" />
+  <rect x="0" y="252" width="1024" height="8" fill="#FFFFFF" />
+  <rect x="380" y="0" width="8" height="1024" fill="#FFFFFF" />
+  <rect x="0" y="380" width="1024" height="8" fill="#FFFFFF" />
+  <rect x="508" y="0" width="8" height="1024" fill="#FFFFFF" />
+  <rect x="0" y="508" width="1024" height="8" fill="#FFFFFF" />
+  <rect x="636" y="0" width="8" height="1024" fill="#FFFFFF" />
+  <rect x="0" y="636" width="1024" height="8" fill="#FFFFFF" />
+  <rect x="764" y="0" width="8" height="1024" fill="#FFFFFF" />
+  <rect x="0" y="764" width="1024" height="8" fill="#FFFFFF" />
+  <rect x="892" y="0" width="8" height="1024" fill="#FFFFFF" />
+  <rect x="0" y="892" width="1024" height="8" fill="#FFFFFF" />
+</svg>
