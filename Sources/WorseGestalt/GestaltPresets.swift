@@ -215,15 +215,28 @@ struct GestaltPreset: Identifiable, Sendable {
 // MARK: - Dynamic Island
 
 enum DynamicIslandOption: String, CaseIterable, Identifiable, Sendable {
-    case iphone14Pro = "2556"
-    case iphone14ProMax = "2796"
-    case iphone16Pro = "2622"
-    case iphone16ProMax = "2868"
-    case iphoneAir = "2736"
+    case iphone14Pro
+    case iphone14ProMax
+    case iphone16Pro
+    case iphone16ProMax
+    case iphoneAir
+    case iphone18Pro
+    case iphoneDuo
 
     var id: String { rawValue }
 
-    var subtype: Int { Int(rawValue)! }
+    /// ArtworkDeviceSubType matches the display height of each device.
+    var subtype: Int {
+        switch self {
+        case .iphone14Pro: 2556    // 1179×2556
+        case .iphone14ProMax: 2796 // 1290×2796
+        case .iphone16Pro: 2622    // 1206×2622
+        case .iphone16ProMax: 2868 // 1320×2868
+        case .iphoneAir: 2736      // 1260×2736
+        case .iphone18Pro: 2622    // 1206×2622 (same panel as 16/17 Pro)
+        case .iphoneDuo: 2670      // inner 1878×2670 (outer 1398×2034)
+        }
+    }
 
     var title: String {
         switch self {
@@ -232,7 +245,102 @@ enum DynamicIslandOption: String, CaseIterable, Identifiable, Sendable {
         case .iphone16Pro: "iPhone 16 Pro"
         case .iphone16ProMax: "iPhone 16 Pro Max"
         case .iphoneAir: "iPhone Air"
+        case .iphone18Pro: "iPhone 18 Pro"
+        case .iphoneDuo: "iPhone Duo"
         }
+    }
+}
+
+// MARK: - Model spoof
+
+/// Device profiles for the full model spoof: ProductType + HWModelStr + CPU-SOC.
+/// Identifier/board data follows the iPhone identifier tables (The Apple Wiki, ipsw.info).
+enum ModelSpoofOption: String, CaseIterable, Identifiable, Sendable {
+    case iphone15Pro
+    case iphone15ProMax
+    case iphone16
+    case iphone16Plus
+    case iphone16Pro
+    case iphone16ProMax
+    case iphone17
+    case iphone17Pro
+    case iphone17ProMax
+    case iphoneAir
+    case iphone18Pro
+    case iphoneDuo
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .iphone15Pro: "iPhone 15 Pro"
+        case .iphone15ProMax: "iPhone 15 Pro Max"
+        case .iphone16: "iPhone 16"
+        case .iphone16Plus: "iPhone 16 Plus"
+        case .iphone16Pro: "iPhone 16 Pro"
+        case .iphone16ProMax: "iPhone 16 Pro Max"
+        case .iphone17: "iPhone 17"
+        case .iphone17Pro: "iPhone 17 Pro"
+        case .iphone17ProMax: "iPhone 17 Pro Max"
+        case .iphoneAir: "iPhone Air"
+        case .iphone18Pro: "iPhone 18 Pro"
+        case .iphoneDuo: "iPhone Duo"
+        }
+    }
+
+    var productType: String {
+        switch self {
+        case .iphone15Pro: "iPhone16,1"
+        case .iphone15ProMax: "iPhone16,2"
+        case .iphone16: "iPhone17,3"
+        case .iphone16Plus: "iPhone17,4"
+        case .iphone16Pro: "iPhone17,1"
+        case .iphone16ProMax: "iPhone17,2"
+        case .iphone17: "iPhone18,3"
+        case .iphone17Pro: "iPhone18,1"
+        case .iphone17ProMax: "iPhone18,2"
+        case .iphoneAir: "iPhone18,4"
+        case .iphone18Pro: "iPhone19,2"
+        case .iphoneDuo: "iPhone19,4"
+        }
+    }
+
+    /// HWModelStr (board configuration).
+    var hardwareModel: String {
+        switch self {
+        case .iphone15Pro: "D83AP"
+        case .iphone15ProMax: "D84AP"
+        case .iphone16: "D47AP"
+        case .iphone16Plus: "D48AP"
+        case .iphone16Pro: "D93AP"
+        case .iphone16ProMax: "D94AP"
+        case .iphone17: "V57AP"
+        case .iphone17Pro: "V53AP"
+        case .iphone17ProMax: "V54AP"
+        case .iphoneAir: "D23AP"
+        case .iphone18Pro: "V63AP"
+        case .iphoneDuo: "V68AP"
+        }
+    }
+
+    /// CPU-SOC name.
+    var cpuName: String {
+        switch self {
+        case .iphone15Pro, .iphone15ProMax: "t8130"                              // A17 Pro
+        case .iphone16, .iphone16Plus, .iphone16Pro, .iphone16ProMax: "t8140"    // A18 (Pro)
+        case .iphone17, .iphone17Pro, .iphone17ProMax, .iphoneAir: "t8150"       // A19 (Pro)
+        case .iphone18Pro, .iphoneDuo: "t8160"                                   // A20 Pro
+        }
+    }
+
+    /// Assignments for a full model spoof (ProductType + HWModelStr + CPU-SOC).
+    /// Face ID may stop working; restore from Backups on instability.
+    static func assignments(option: ModelSpoofOption) -> [String: PresetValue] {
+        [
+            "h9jDsbgj7xIVeIQ8S3/X3Q": .string(option.productType),   // ProductType
+            "oYicEKzVTz4/CxxE05pEgQ": .string(option.hardwareModel), // HWModelStr
+            "5pYKlGnYYBzGvAlIU8RjEQ": .string(option.cpuName),       // CPU-SOC
+        ]
     }
 }
 
@@ -248,6 +356,8 @@ enum AIRegionPreset {
         "iPhone17,3": ("iPhone 16", "A3081"),
         "iPhone17,4": ("iPhone 16 Plus", "A3082"),
         "iPhone17,5": ("iPhone 16e", "A3212"),
+        "iPhone19,2": ("iPhone 18 Pro", "A3714"),
+        "iPhone19,4": ("iPhone Duo", "A3447"),
         "iPad16,1": ("iPad mini (A17 Pro)", "A2993"),
         "iPad16,2": ("iPad mini (A17 Pro)", "A2995"),
         "iPad16,3": ("iPad Pro 11-inch (M4)", "A2836"),

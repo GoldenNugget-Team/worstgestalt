@@ -13,6 +13,8 @@ struct PresetsView: View {
     @State private var islandOption: DynamicIslandOption = .iphone14Pro
     @State private var renameStaged = false
     @State private var deviceName = ""
+    @State private var spoofModelStaged = false
+    @State private var spoofModelOption: ModelSpoofOption = .iphone18Pro
     @State private var aiStaged = false
     @AppStorage("appliedPresets") private var appliedPresetsRaw = ""
 
@@ -29,6 +31,7 @@ struct PresetsView: View {
                 connectionSection
                 islandSection
                 renameSection
+                spoofModelSection
                 aiSection
                 ForEach(GestaltPreset.Category.allCases) { category in
                     presetSection(category)
@@ -38,6 +41,8 @@ struct PresetsView: View {
             .onChange(of: islandStaged) { _, staged in applyIsland(stage: staged) }
             .onChange(of: islandOption) { _, _ in if islandStaged { applyIsland(stage: true) } }
             .onChange(of: renameStaged) { _, staged in applyRename(stage: staged) }
+            .onChange(of: spoofModelStaged) { _, staged in applySpoofModel(stage: staged) }
+            .onChange(of: spoofModelOption) { _, _ in if spoofModelStaged { applySpoofModel(stage: true) } }
             .onChange(of: aiStaged) { _, staged in applyAI(enable: staged) }
         }
     }
@@ -95,6 +100,22 @@ struct PresetsView: View {
             Text("Edits ArtworkTraits → ArtworkDeviceProductDescription.")
                 .font(.footnote)
                 .foregroundColor(.secondary)
+        }
+    }
+
+    private var spoofModelSection: some View {
+        Section("Spoof model") {
+            Toggle("Spoof device model", isOn: $spoofModelStaged)
+                .disabled(store.state != .loaded)
+            Picker("Model", selection: $spoofModelOption) {
+                ForEach(ModelSpoofOption.allCases) { option in
+                    Text(option.title).tag(option)
+                }
+            }
+            .disabled(!spoofModelStaged)
+            Text("Edits ProductType, HWModelStr and CPU-SOC (\(spoofModelOption.productType), \(spoofModelOption.hardwareModel), \(spoofModelOption.cpuName)). Face ID may break; restore from Backups to undo.")
+                .font(.footnote)
+                .foregroundColor(.orange)
         }
     }
 
@@ -170,6 +191,15 @@ struct PresetsView: View {
         var artwork = (store.cacheExtra[artworkKey] as? [String: Any]) ?? [:]
         artwork["ArtworkDeviceProductDescription"] = deviceName
         store.setValue(artwork, forKey: artworkKey)
+        Task { await store.save() }
+    }
+
+    private func applySpoofModel(stage: Bool) {
+        guard stage, store.state == .loaded else { return }
+        for (key, presetValue) in ModelSpoofOption.assignments(option: spoofModelOption) {
+            store.setValue(presetValue.raw, forKey: key)
+        }
+        UILogger.log("[spoof] model spoofed to \(spoofModelOption.title) (\(spoofModelOption.productType))")
         Task { await store.save() }
     }
 
