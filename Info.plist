@@ -5,6 +5,11 @@
 	<key>CFBundleDisplayName</key>
 	<string>WorstGestalt</string>
 
+	<key>CFBundleShortVersionString</key>
+	<string>1.1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+
 	<key>CFBundleName</key>
 	<string>WorstGestalt</string>
 	<key>NSHumanReadableCopyright</key>

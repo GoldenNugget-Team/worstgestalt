@@ -14,3 +14,4 @@ entitlementsPath: entitlements.plist
 #    source for a future Xcode/macOS build.
 resources:
   - Assets.car
+  - AppIcon.png
