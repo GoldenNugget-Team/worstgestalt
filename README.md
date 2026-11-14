@@ -47,18 +47,11 @@ iOS 26.0). Built without a Mac, via
 
 Grab the newest **`WorstGestalt-distr.ipa`** from the
 [Releases page](https://github.com/GoldenNugget-Team/worstgestalt/releases)
-and side-load it:
-
-| Tool | Verdict |
-|---|---|
-| **AltStore / SideStore** | ✅ recommended — they register/fit the App Group to your team automatically |
-| [worstload](https://github.com/GoldenNugget-Team) | ✅ mini-CLI sideloader (private — ask in the Discord) — signs **and** installs the IPA straight from the command line; registers the requested App Group verbatim; works with a paid Apple ID if your usual tool can't register groups |
-| Feather | ❌ — does not register App Groups on the portal → the class-7 escape won't work |
-| Other paid-cert installers | ❌ — a paid certificate **without a registered App Group** is not enough; use worstload |
+and side-load it with iLoader (other sideloaders not supported!)
 
 > The **App Group** (`group.com.awesomenull.worstgestalt`) is what powers
 > Backend A. If you install with a tool that doesn't register groups, the app
-> still works on iOS 26.x via Backend B (no App Group needed) — the main
+> still works on iOS 26.x and 27 Beta 1-4 via Backend Bad_query (no App Group needed) — the main
 > scenarios are covered there too.
 
 ### Option B — build from source
@@ -84,65 +77,6 @@ xtool dev build --ipa
 Building from Windows Subsystem for Linux needs a small usbmuxd proxy tweak —
 the full walkthrough is in
 [docs/wsl-usbmuxd.md](docs/wsl-usbmuxd.md).
-
-## How it works
-
-1. **Backend A — worse_query** (Taj C, forcequitOS, GPL-3.0): the app creates
-   a symlink `App Group/Library/Caches` → target path, sends
-   `containermanagerd` a class 7 (App Group) `container_query`, and the
-   kernel issues a sandbox token already tied to the target vnode.
-2. **Backend B — bad_query** (same author): a class 13
-   (`systemgroup.com.apple.mobilegestaltcache`) `container_query` + path
-   traversal via `part_domain` — works on iOS 26.x and needs no App Group.
-3. With the token the app reads the plist, edits `CacheExtra`, serializes and
-   writes **in place** (`open(O_WRONLY)` + `ftruncate` + `write` + `fsync`) —
-   a rename would create a new inode and the sandbox token bound to the old
-   vnode would break. After writing, the plist is re-read and verified.
-4. Before every write — an automatic backup of the raw bytes into
-   `Documents/Backups/`.
-
-## Troubleshooting
-
-**The icon in the list says the escape test failed / wrong backend?**
-The app tells you which backend is available when it loads. Backend A needs
-the App Group registered properly — reinstall with AltStore / SideStore /
-AltStore / SideStore / worstload, or use Backend B on iOS 26.x.
-
-**Something broke after restoring a value.**
-Open the app → Backups → restore the most recent backup (or import an
-external backup from the Files app). If the springboard has already
-misbehaved, reboot: MobileGestalt values only get written when the phone
-re-reads the plist on boot, so a good backup restore before a reboot is
-almost always enough. Keep iTunes/Finder (or idevicebackup) backups too —
-a reflash is the last resort for a reason.
-
-**My changes don't show up.**
-MobileGestalt changes are picked up at boot (or when the reading app
-re-checks). Apply the preset, then respring/reboot as the preset instructs.
-
-## Changing the app ID / App Group
-
-| What | Where |
-|---|---|
-| bundle ID | `xtool.yml` → `bundleID` |
-| App Group | `Sources/WorseGestalt/Config.swift` + `entitlements.plist` |
-
-Backend B (bad_query) does **not** require an App Group — if you are on a
-free account and the build/signing fails on the App Group, you can drop
-`entitlementsPath` from `xtool.yml` and set `appGroup = ""` in
-`Config.swift`: only the bad_query path remains (iOS 26.x / 27.x main
-scenarios covered). The App Group is only needed for backend A
-(worse_query).
-
-## Repository tour
-
-| Path | What's inside |
-|---|---|
-| `Sources/WorseGestalt/` | the app (SwiftUI + BQCore bridge engine) |
-| `Sources/CQueryBridges/` | the Objective-C escapes, incl. `worse_query.m` |
-| `tools/car/` | project-specific icon-catalog generator (info: [docs/appicon.md](docs/appicon.md)) |
-| `docs/` | developer notes on the `.car` format, WSL build loop, icon |
-| `Assets.car`, `AppIcon.png`, `AppIcon.icon/` | the icon (compiled, fallback, Liquid Glass source) |
 
 ## Sources
 
